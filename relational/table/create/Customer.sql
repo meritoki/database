@@ -1,7 +1,7 @@
 SET foreign_key_checks = 0;
-DROP TABLE IF EXISTS `Member`;
+DROP TABLE IF EXISTS `Customer`;
 SET foreign_key_checks = 1;
-CREATE TABLE `Member` (
+CREATE TABLE `Customer` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idAccount` bigint(20) UNSIGNED NOT NULL,
   `idConsumer` bigint(20) UNSIGNED NOT NULL,

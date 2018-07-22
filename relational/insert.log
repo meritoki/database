@@ -1,3 +1,70 @@
 mysql: [Warning] Using a password on the command line interface can be insecure.
-ERROR at line 6: Failed to open file './model/relational/create.sql', error: 2
+ERROR 1215 (HY000) at line 4 in file: './relational/table/create/User.sql': Cannot add foreign key constraint
+--------------
+CREATE DATABASE IF NOT EXISTS web
+--------------
+
+Query OK, 1 row affected, 1 warning
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Account`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Account` (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  uuid varchar(1024) NOT NULL,
+  PRIMARY KEY (id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `User`
+--------------
+
+Query OK, 0 rows affected, 1 warning
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `User` (
+    `idUser` int NOT NULL AUTO_INCREMENT,
+    `idAccount` int NOT NULL,
+    `name` varchar(64) NOT NULL,
+    `password` varchar(64) NOT NULL,
+    `registerDate` datetime NOT NULL,
+    `activityDate` datetime NOT NULL,
+    `login` int DEFAULT 1,
+    `role` varchar(64) NOT NULL,
+    PRIMARY KEY (`idUser`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account`(`idAccount`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+--------------
+
 Bye

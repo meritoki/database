@@ -3,6 +3,6 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 DROP DATABASE IF EXISTS web
 --------------
 
-Query OK, 2 rows affected
+Query OK, 10 rows affected
 
 Bye
