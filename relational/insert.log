@@ -1,0 +1,3 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR at line 6: Failed to open file './model/relational/create.sql', error: 2
+Bye

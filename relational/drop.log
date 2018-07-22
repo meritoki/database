@@ -1,0 +1,8 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+--------------
+DROP DATABASE IF EXISTS web
+--------------
+
+Query OK, 2 rows affected
+
+Bye
