@@ -1,5 +1,4 @@
 mysql: [Warning] Using a password on the command line interface can be insecure.
-ERROR 1215 (HY000) at line 4 in file: './relational/table/create/User.sql': Cannot add foreign key constraint
 --------------
 CREATE DATABASE IF NOT EXISTS web
 --------------
@@ -26,9 +25,9 @@ Query OK, 0 rows affected
 
 --------------
 CREATE TABLE `Account` (
-  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  uuid varchar(1024) NOT NULL,
-  PRIMARY KEY (id)
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`)
 )
 --------------
 
@@ -44,7 +43,7 @@ Query OK, 0 rows affected
 DROP TABLE IF EXISTS `User`
 --------------
 
-Query OK, 0 rows affected, 1 warning
+Query OK, 0 rows affected
 
 --------------
 SET foreign_key_checks = 1
@@ -54,17 +53,1438 @@ Query OK, 0 rows affected
 
 --------------
 CREATE TABLE `User` (
-    `idUser` int NOT NULL AUTO_INCREMENT,
-    `idAccount` int NOT NULL,
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
     `name` varchar(64) NOT NULL,
     `password` varchar(64) NOT NULL,
     `registerDate` datetime NOT NULL,
     `activityDate` datetime NOT NULL,
     `login` int DEFAULT 1,
     `role` varchar(64) NOT NULL,
-    PRIMARY KEY (`idUser`),
-    FOREIGN KEY (`idAccount`) REFERENCES `Account`(`idAccount`)
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Client`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Client` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `identification` varchar(128) NOT NULL,
+    `name` varchar(64) NOT NULL,
+    `secret` varchar(64) NOT NULL,
+    `registerDate` datetime NOT NULL,
+    `activityDate` datetime NOT NULL,
+    `login` int DEFAULT 1,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Code`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Code` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `redirectURI` VARCHAR(1024) DEFAULT NULL,
+    `value` VARCHAR(1024) DEFAULT NULL,
+    `idUser` bigint(20) UNSIGNED NOT NULL,
+    `idClient` bigint(20) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account`(`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`idClient`) REFERENCES `Client`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Email`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Email` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `address` varchar(32) DEFAULT NULL,
+    `idUser` bigint(20) UNSIGNED NOT NULL,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+	FOREIGN KEY (`idAccount`) REFERENCES `Account`(`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Identification`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Identification` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `firstName` varchar(64) DEFAULT NULL,
+    `middleInitial` varchar(1) DEFAULT NULL,
+    `middleName` varchar(64) DEFAULT NULL,
+    `lastName` varchar(64) DEFAULT NULL,
+    `name` varchar(256) DEFAULT NULL,
+    `guid` varchar (128) DEFAULT NULL,
+    `nickName` varchar(128) DEFAULT NULL,
+    `gender` varchar(1) DEFAULT '0',
+    `birthDate` datetime DEFAULT NULL,
+    `idUser` bigint(20) UNSIGNED NOT NULL,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Location`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Location` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `addressOne` varchar(45) DEFAULT NULL,
+    `addressTwo` varchar(45) DEFAULT NULL,
+    `addressThree` varchar(45) DEFAULT NULL,
+    `apartment` varchar(45) DEFAULT NULL,
+    `suite` varchar(45) DEFAULT NULL,
+    `unit` varchar(45) DEFAULT NULL,
+    `city` varchar(45) DEFAULT NULL,
+    `state` varchar(45) DEFAULT NULL,
+    `zipCode` varchar(45) DEFAULT NULL,
+    `idUser` bigint(20) UNSIGNED NOT NULL,
+	`idAccount` bigint(20) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account`(`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Organization`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Organization` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `name` varchar(128) NULL, 
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Phone`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Phone` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `number` varchar(32) DEFAULT NULL,
+    `idUser` bigint(20) UNSIGNED NOT NULL,
+	`idAccount` bigint(20) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+	FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Token`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Token` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `idUser` bigint(20) UNSIGNED NOT NULL,
+    `idClient` bigint(20) UNSIGNED NOT NULL,
+    `value` varchar(1024) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account`(`id`),
+    FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`idClient`) REFERENCES `Client`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Image`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Image` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idUser` bigint(20) UNSIGNED NOT NULL,
+  `url` varchar(128) NOT NULL,
+  `uuid` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idUser`) REFERENCES `User`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Document`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Document` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idUser` bigint(20) UNSIGNED NOT NULL,
+  `url` varchar(128) NOT NULL,
+  `uuid` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idUser`) REFERENCES `User`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Consumer`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Consumer` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idUser` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idUser`) REFERENCES `User`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Customer`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Customer` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Member`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Member` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Viewer`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Viewer` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Follower`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Follower` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Producer`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Producer` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `idUser` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id),
+  FOREIGN KEY (`idUser`) REFERENCES `User`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Administrator`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Administrator` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED,
+  `idProducer` bigint(20) UNSIGNED,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idProducer`) REFERENCES `Producer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Publisher`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Publisher` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idProducer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idProducer`) REFERENCES `Producer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Leader`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Leader` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idProducer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idProducer`) REFERENCES `Producer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Card`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Card` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `ConsumerEmail`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `ConsumerEmail` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `idEmail` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id),
+  FOREIGN KEY (`idEmail`) REFERENCES `Email`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `ConsumerIdentification`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `ConsumerIdentification` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `idIdentification` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id),
+  FOREIGN KEY (`idIdentification`) REFERENCES `Identification`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `ConsumerPhone`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `ConsumerPhone` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `idPhone` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id),
+  FOREIGN KEY (`idPhone`) REFERENCES `Phone`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `ConsumerLocation`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `ConsumerLocation` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `idLocation` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id),
+  FOREIGN KEY (`idLocation`) REFERENCES `Location`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `ConsumerCustomer`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `ConsumerCustomer` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `idCustomer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id),
+  FOREIGN KEY (`idCustomer`) REFERENCES `Customer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `CustomerCard`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `CustomerCard` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idCard` bigint(20) UNSIGNED NOT NULL,
+  `idCustomer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idCard`) REFERENCES `Card`(id),
+  FOREIGN KEY (`idCustomer`) REFERENCES `Customer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Family`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Family` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Relation`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Relation` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idFamily` bigint(20) UNSIGNED NOT NULL,
+  `type` enum('FATHER',
+			  'MOTHER',
+              'BROTHER',
+              'SISTER',
+              'GRAND_FATHER',
+              'GRAND_MOTHER',
+              'AUNT','UNCLE',
+              'DAUGHTER','SON',
+              'STEP_FATHER',
+              'STEP_MOTHER',
+              'FOSTER_PARENT',
+              'FOSTER_FATHER',
+              'FOSTER_MOTHER',
+              'STEP_SON',
+              'STEP_DAUGHTER',
+              'COUSIN',
+              'NEICE',
+              'NEPHEW',
+              'FRIEND',
+              'FAMILY_FRIEND',
+              'GIRL_FRIEND',
+              'BOY_FRIEND',
+              'FIANCE',
+              'FIANCEE') NOT NULL,
+  `idConsumer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idFamily`) REFERENCES `Family`(id),
+  FOREIGN KEY (`idConsumer`) REFERENCES `Consumer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `LeaderFollower`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `LeaderFollower` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idLeader` bigint(20) UNSIGNED NOT NULL,
+  `idFollower` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idLeader`) REFERENCES `Leader`(id),
+  FOREIGN KEY (`idFollower`) REFERENCES `Follower`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Merchant`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Merchant` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idOrganization` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(128) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `url` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idOrganization`) REFERENCES `Organization`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `MerchantCustomer`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `MerchantCustomer` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idMerchant` bigint(20) UNSIGNED NOT NULL,
+  `idCustomer` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idMerchant`) REFERENCES `Merchant`(id),
+  FOREIGN KEY (`idCustomer`) REFERENCES `Customer`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `MerchantLocation`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `MerchantLocation` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idMerchant` bigint(20) UNSIGNED NOT NULL,
+  `idLocation` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idMerchant`) REFERENCES `Merchant`(id),
+  FOREIGN KEY (`idLocation`) REFERENCES `Location`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `MerchantPhone`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `MerchantPhone` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `idMerchant` bigint(20) UNSIGNED NOT NULL,
+  `idPhone` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idMerchant`) REFERENCES `Merchant`(id),
+  FOREIGN KEY (`idPhone`) REFERENCES `Phone`(id)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Organization`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Organization` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `name` varchar(128) NULL, 
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `OrganizationPublisher`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `OrganizationPublisher` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `idOrganization` bigint(20) UNSIGNED NOT NULL,
+    `idPublisher` bigint(20) UNSIGNED NOT NULL,
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`),
+    FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`),
+    FOREIGN KEY (`idPublisher`) REFERENCES `Publisher` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `OrganizationEmail`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `OrganizationEmail` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `idOrganization` bigint(20) UNSIGNED NOT NULL,
+    `idEmail` bigint(20) UNSIGNED NOT NULL,
+    `name` varchar(128) NULL, 
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`),
+    FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`),
+    FOREIGN KEY (`idEmail`) REFERENCES `Email` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `OrganizationLocation`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `OrganizationLocation` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `idOrganization` bigint(20) UNSIGNED NOT NULL,
+    `idLocation` bigint(20) UNSIGNED NOT NULL,
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`),
+    FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`)ERROR 1050 (42S01) at line 4 in file: './relational/table/create/Publication.sql': Table 'Publication' already exists
+,
+    FOREIGN KEY (`idLocation`) REFERENCES `Location` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `OrganizationMember`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `OrganizationMember` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `idOrganization` bigint(20) UNSIGNED NOT NULL,
+    `idMember` bigint(20) UNSIGNED NOT NULL,
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`),
+    FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`),
+    FOREIGN KEY (`idMember`) REFERENCES `Member` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `OrganizationPhone`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `OrganizationPhone` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `idOrganization` bigint(20) UNSIGNED NOT NULL,
+    `idPhone` bigint(20) UNSIGNED NOT NULL,
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`),
+    FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`),
+    FOREIGN KEY (`idPhone`) REFERENCES `Phone` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `OrganizationAdministrator`
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `OrganizationAdministrator` (
+    `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `idAccount` bigint(20) UNSIGNED NOT NULL,
+    `idOrganization` bigint(20) UNSIGNED NOT NULL,
+    `idAdministrator` bigint(20) UNSIGNED NOT NULL,
+    `name` varchar(128) NULL, 
+    `createDate` datetime NOT NULL,
+    `activityDate` datetime NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`idAccount`) REFERENCES `Account` (`id`),
+	FOREIGN KEY (`idOrganization`) REFERENCES `Organization` (`id`),
+    FOREIGN KEY (`idAdministrator`) REFERENCES `Administrator` (`id`)
+)
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET foreign_key_checks = 0
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+DROP TABLE IF EXISTS `Pulication`
+--------------
+
+Query OK, 0 rows affected, 1 warning
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE TABLE `Publication` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idAccount` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(1024) NOT NULL,
+  `character` varchar(1024) NOT NULL,
+  `text` varchar(1024) NOT NULL,
+  `repository` varchar(1024) NOT NULL,
+  `createdDate` datetime NOT NULL,
+  `modifiedDate` datetime NOT NULL,
+  `deletedDate` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id)
+)
 --------------
 
 Bye

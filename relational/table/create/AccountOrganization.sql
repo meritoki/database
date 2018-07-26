@@ -7,5 +7,6 @@ CREATE TABLE `AccountOrganization` (
   `idOrganization` bigint(20) UNSIGNED,
   `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id)
+  FOREIGN KEY (`idAccount`) REFERENCES `Account`(id),
+  FOREIGN KEY (`idOrganization`) REFERENCES `Organization`(id)
 )
