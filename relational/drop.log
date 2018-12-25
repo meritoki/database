@@ -1,8 +1,74 @@
 mysql: [Warning] Using a password on the command line interface can be insecure.
 --------------
-DROP DATABASE IF EXISTS web
+SET foreign_key_checks = 0
 --------------
 
-Query OK, 40 rows affected
+Query OK, 0 rows affected
+
+--------------
+DROP DATABASE IF EXISTS `auth`
+--------------
+
+Query OK, 5 rows affected
+
+--------------
+DROP DATABASE IF EXISTS `user`
+--------------
+
+Query OK, 7 rows affected
+
+--------------
+DROP DATABASE IF EXISTS `id`
+--------------
+
+Query OK, 3 rows affected
+
+--------------
+DROP DATABASE IF EXISTS `location`
+--------------
+
+Query OK, 6 rows affected
+
+--------------
+DROP DATABASE IF EXISTS lang
+--------------
+
+Query OK, 1 row affected
+
+--------------
+DROP DATABASE IF EXISTS file
+--------------
+
+Query OK, 2 rows affected
+
+--------------
+DROP DATABASE IF EXISTS msg
+--------------
+
+Query OK, 12 rows affected
+
+--------------
+DROP DATABASE IF EXISTS card
+--------------
+
+Query OK, 3 rows affected
+
+--------------
+DROP DATABASE IF EXISTS bank
+--------------
+
+Query OK, 0 rows affected, 1 warning
+
+--------------
+DROP DATABASE IF EXISTS org
+--------------
+
+Query OK, 0 rows affected, 1 warning
+
+--------------
+SET foreign_key_checks = 1
+--------------
+
+Query OK, 0 rows affected
 
 Bye

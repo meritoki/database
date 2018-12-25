@@ -9,7 +9,7 @@ case "$1" in
         ./load.sh $HOST $DATABASE $USER $PASSWORD drop $LOAD_PATH
         ;;
     insert)
-        ./load.sh $HOST $DATABASE $USER $PASSWORD create $LOAD_PATH
+        ./load.sh $HOST $DATABASE $USER $PASSWORD insert $LOAD_PATH
         ;;
     new)
         ./load.sh $HOST $DATABASE $USER $PASSWORD drop $LOAD_PATH
