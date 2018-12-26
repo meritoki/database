@@ -1,2 +1,1 @@
-FROM mysql/mysql-server
-WORKDIR /meritoki/dailybread/database
+FROM mysql/mysql-server:latest

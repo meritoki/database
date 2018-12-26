@@ -1,0 +1,8 @@
+FROM ubuntu:16.04
+WORKDIR /meritoki/dailybread/database
+COPY ./ /meritoki/dailybread/database
+RUN apt-get update -y
+RUN apt-get install mysql-server -y
+
+RUN ./install.sh create
+EXPOSE 3306
