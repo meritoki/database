@@ -5,7 +5,6 @@ CREATE TABLE `ConsumerPhone` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idConsumer` bigint(20) UNSIGNED NOT NULL,
   `idPhone` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idConsumer`) REFERENCES user.`Consumer`(id),
   FOREIGN KEY (`idPhone`) REFERENCES `Phone`(id)

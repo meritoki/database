@@ -43,6 +43,11 @@ INSERT INTO msg.Email (id,address) VALUES (@idEmail,"jorodriguez199@yahoo.com");
 INSERT INTO msg.ConsumerEmail (idConsumer,idEmail) VALUES (@idConsumer,@idEmail);
 COMMIT;
 
+SET @idPhone=1;
+INSERT INTO msg.Phone (`id`,`number`) VALUES (@idPhone,"34979441");
+INSERT INTO msg.ConsumerPhone (idConsumer,idPhone) VALUES (@idConsumer,@idPhone);
+COMMIT;
+
 /*
   card
 */

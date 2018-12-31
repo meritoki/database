@@ -5,7 +5,7 @@ CREATE TABLE `DonorEmail` (
     `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `idDonor` bigint(20) UNSIGNED NOT NULL,
     `idEmail` bigint(20) UNSIGNED NOT NULL,
-    `createDate` datetime NOT NULL,
+    `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `activityDate` datetime NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idDonor`) REFERENCES user.`Donor` (`id`),

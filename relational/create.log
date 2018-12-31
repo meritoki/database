@@ -60,6 +60,7 @@ CREATE TABLE `User` (
     `password` varchar(64) NOT NULL,
     `registerDate` datetime NOT NULL,
     `activityDate` datetime NOT NULL,
+    active boolean DEFAULT false,
     `login` int DEFAULT 1,
     `role` varchar(64) NOT NULL,
     PRIMARY KEY (`id`),
@@ -509,7 +510,6 @@ CREATE TABLE `DonorIdentification` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idDonor` bigint(20) UNSIGNED NOT NULL,
   `idIdentification` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idDonor`) REFERENCES user.`Donor`(id),
   FOREIGN KEY (`idIdentification`) REFERENCES `Identification`(id)
@@ -583,7 +583,6 @@ CREATE TABLE `MerchantLocation` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idMerchant` bigint(20) UNSIGNED NOT NULL,
   `idLocation` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idMerchant`) REFERENCES user.`Merchant`(id),
   FOREIGN KEY (`idLocation`) REFERENCES `Location`(id)
@@ -615,7 +614,6 @@ CREATE TABLE `AgentLocation` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idAgent` bigint(20) UNSIGNED NOT NULL,
   `idLocation` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idAgent`) REFERENCES user.`Agent`(id),
   FOREIGN KEY (`idLocation`) REFERENCES `Location`(id)
@@ -678,7 +676,6 @@ CREATE TABLE `DonorLocation` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idDonor` bigint(20) UNSIGNED NOT NULL,
   `idLocation` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idDonor`) REFERENCES user.`Donor`(id),
   FOREIGN KEY (`idLocation`) REFERENCES `Location`(id)
@@ -943,7 +940,6 @@ CREATE TABLE `ConsumerPhone` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idConsumer` bigint(20) UNSIGNED NOT NULL,
   `idPhone` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idConsumer`) REFERENCES user.`Consumer`(id),
   FOREIGN KEY (`idPhone`) REFERENCES `Phone`(id)
@@ -975,7 +971,6 @@ CREATE TABLE `MerchantPhone` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `idMerchant` bigint(20) UNSIGNED NOT NULL,
   `idPhone` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`idMerchant`) REFERENCES user.`Merchant`(id),
   FOREIGN KEY (`idPhone`) REFERENCES `Phone`(id)
@@ -1007,7 +1002,7 @@ CREATE TABLE `DonorPhone` (
     `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `idDonor` bigint(20) UNSIGNED NOT NULL,
     `idPhone` bigint(20) UNSIGNED NOT NULL,
-    `createDate` datetime NOT NULL,
+    `createDate` datetime DEFAULT CURRENT_TIMESTAMP,
     `activityDate` datetime NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idDonor`) REFERENCES user.`Donor` (`id`),
@@ -1197,7 +1192,7 @@ CREATE TABLE `DonorEmail` (
     `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `idDonor` bigint(20) UNSIGNED NOT NULL,
     `idEmail` bigint(20) UNSIGNED NOT NULL,
-    `createDate` datetime NOT NULL,
+    `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `activityDate` datetime NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idDonor`) REFERENCES user.`Donor` (`id`),

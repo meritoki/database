@@ -9,9 +9,10 @@ CREATE TABLE `User` (
     `password` varchar(64) NOT NULL,
     `registerDate` datetime NOT NULL,
     `activityDate` datetime NOT NULL,
+    active boolean DEFAULT false,
     `login` int DEFAULT 1,
     `role` varchar(64) NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`idAccount`) REFERENCES `Account`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-SET foreign_key_checks = 0;  
+SET foreign_key_checks = 0;

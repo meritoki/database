@@ -138,6 +138,30 @@ COMMIT
 Query OK, 0 rows affected
 
 --------------
+SET @idPhone=1
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+INSERT INTO msg.Phone (`id`,`number`) VALUES (@idPhone,"34979441")
+--------------
+
+Query OK, 1 row affected
+
+--------------
+INSERT INTO msg.ConsumerPhone (idConsumer,idPhone) VALUES (@idConsumer,@idPhone)
+--------------
+
+Query OK, 1 row affected
+
+--------------
+COMMIT
+--------------
+
+Query OK, 0 rows affected
+
+--------------
 BEGIN
 --------------
 
@@ -183,7 +207,8 @@ Query OK, 1 row affected
 COMMIT
 --------------
 
-Query OK, 0 rows affected
+Query OK, 0 roERROR 1364 (HY000) at line 50 in file: './relational/table/transaction/configuration/development/donor.sql': Field 'uuid' doesn't have a default value
+ws affected
 
 --------------
 Set @idDonor=2
@@ -210,14 +235,79 @@ SET @idIdentification=2
 Query OK, 0 rows affected
 
 --------------
-INSERT INTO id.IdentifiERROR 1364 (HY000) at line 27 in file: './relational/table/transaction/configuration/development/donor.sql': Field 'uuid' doesn't have a default value
-cation (id,firstName,lastName,name, gender, birthDate) VALUES (@idIdentification,"Joaquin","Rodriguez","Joaquin Osvaldo Rodriguez", "M", NOW())
+INSERT INTO id.Identification (id,firstName,lastName,name, gender, birthDate) VALUES (@idIdentification,"Joaquin","Rodriguez","Joaquin Osvaldo Rodriguez", "M", NOW())
 --------------
 
 Query OK, 1 row affected
 
 --------------
 INSERT INTO id.DonorIdentification (idDonor,idIdentification) VALUES (@idDonor,@idIdentification)
+--------------
+
+Query OK, 1 row affected
+
+--------------
+COMMIT
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET @idLocation=2
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+INSERT INTO location.Location (id,addressOne,city,zipCode) VALUES (@idLocation,"123 Fake Street","Blue Bell", "19422")
+--------------
+
+Query OK, 1 row affected
+
+--------------
+INSERT INTO location.DonorLocation(idDonor,idLocation) VALUES (@idDonor,@idLocation)
+--------------
+
+Query OK, 1 row affected
+
+--------------
+COMMIT
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET @idEmail=2
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+INSERT INTO msg.Email (id,address) VALUES (@idEmail,"jorodriguez199@yahoo.com")
+--------------
+
+Query OK, 1 row affected
+
+--------------
+INSERT INTO msg.DonorEmail (idDonor,idEmail) VALUES (@idDonor,@idEmail)
+--------------
+
+Query OK, 1 row affected
+
+--------------
+COMMIT
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SET @idCard=2
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+INSERT INTO card.Card(id) VALUES (@idCard)
 --------------
 
 Bye
