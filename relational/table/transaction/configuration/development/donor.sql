@@ -7,7 +7,7 @@ SET @idAccount=2;
 SET @idUser=2;
 SET @idClient=2;
 INSERT INTO auth.Account (`id`,`uuid`) VALUES (@idAccount,UUID());
-INSERT INTO auth.User (`id`,uuid, `idAccount`,`name`,`password`,`registerDate`,`activityDate`,`login`,`role`) VALUES (@idUser,UUID(),@idAccount,'jorodriguez1988@yahoo.com','$2a$10$opfjMC.OXSLPcVkfV9WAIO6g/PbxP6Z.vZJTxT0o1.E9CslTnvAhW',NOW(),NOW(),0,'Donor');
+INSERT INTO auth.User (`id`,uuid, `idAccount`,`name`,`password`,`registerDate`,`activityDate`,`login`,`role`) VALUES (@idUser,UUID(),@idAccount,'jorodriguez1988@gmail.com','$2a$10$opfjMC.OXSLPcVkfV9WAIO6g/PbxP6Z.vZJTxT0o1.E9CslTnvAhW',NOW(),NOW(),0,'Donor');
 INSERT INTO auth.Client (`id`,idUser,`secret`, `identification`,`name`, registerDate,activityDate) VALUES (@idClient,@idUser,'123','01','mobile',NOW(),NOW());
 COMMIT;
 

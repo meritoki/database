@@ -30,7 +30,7 @@ INSERT INTO auth.Account (`id`,`uuid`) VALUES (@idAccount,UUID())
 Query OK, 1 row affected
 
 --------------
-INSERT INTO auth.User (`id`,uuid, `idAccount`,`name`,`password`,`registerDate`,`activityDate`,`login`,`role`) VALUES (@idUser,UUID(),@idAccount,'jorodriguez1988@yahoo.com','$2a$10$opfjMC.OXSLPcVkfV9WAIO6g/PbxP6Z.vZJTxT0o1.E9CslTnvAhW',NOW(),NOW(),0,'consumer')
+INSERT INTO auth.User (`id`,uuid, `idAccount`,`name`,`password`,`registerDate`,`activityDate`,`login`,`role`, active) VALUES (@idUser,UUID(),@idAccount,'jorodriguez1988@yahoo.com','$2a$10$opfjMC.OXSLPcVkfV9WAIO6g/PbxP6Z.vZJTxT0o1.E9CslTnvAhW',NOW(),NOW(),0,'consumer',1)
 --------------
 
 Query OK, 1 row affected
@@ -192,7 +192,7 @@ INSERT INTO auth.Account (`id`,`uuid`) VALUES (@idAccount,UUID())
 Query OK, 1 row affected
 
 --------------
-INSERT INTO auth.User (`id`,uuid, `idAccount`,`name`,`password`,`registerDate`,`activityDate`,`login`,`role`) VALUES (@idUser,UUID(),@idAccount,'jorodriguez1988@yahoo.com','$2a$10$opfjMC.OXSLPcVkfV9WAIO6g/PbxP6Z.vZJTxT0o1.E9CslTnvAhW',NOW(),NOW(),0,'Donor')
+INSERT INTO auth.User (`id`,uuid, `idAccount`,`name`,`password`,`registerDate`,`activityDate`,`login`,`role`) VALUES (@idUser,UUID(),@idAccount,'jorodriguez1988@gmail.com','$2a$10$opfjMC.OXSLPcVkfV9WAIO6g/PbxP6Z.vZJTxT0o1.E9CslTnvAhW',NOW(),NOW(),0,'Donor')
 --------------
 
 Query OK, 1 row affected
@@ -207,8 +207,8 @@ Query OK, 1 row affected
 COMMIT
 --------------
 
-Query OK, 0 roERROR 1364 (HY000) at line 50 in file: './relational/table/transaction/configuration/development/donor.sql': Field 'uuid' doesn't have a default value
-ws affected
+QuerERROR 1364 (HY000) at line 50 in file: './relational/table/transaction/configuration/development/donor.sql': Field 'uuid' doesn't have a default value
+y OK, 0 rows affected
 
 --------------
 Set @idDonor=2
